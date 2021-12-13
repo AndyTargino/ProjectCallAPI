@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MATERIAL</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.6.0.js"
+        integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    <style>
+        .custome-title {
+            text-align: center;
+            font-weight: bold;
+        }
+
+        input {
+            border-radius: unset !important;
+        }
+
+        button {
+            border-radius: unset !important;
+            float: right;
+            margin: 0.4rem;
+        }
+
+        .card {
+            border-radius: unset !important;
+            margin-top: 3rem;
+
+        }
+
+        .nav {
+            display: flex;
+            -ms-flex-wrap: wrap;
+            flex-wrap: wrap;
+            padding-left: 385px;
+            padding-right: 385px;
+            margin-bottom: 0;
+            list-style: none;
+            justify-content: center;
+        }
+
+        .loader {
+            position: fixed;
+            z-index: 99;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .loader>img {
+            width: 100px;
+        }
+
+        .loader.hidden {
+            animation: fadeOut 1s;
+            animation-fill-mode: forwards;
+        }
+
+        @keyframes fadeOut {
+            100% {
+                opacity: 0;
+                visibility: hidden;
+            }
+        }
+    </style>
+
+<body>
+
+
+    <!-- POPUP para criar dados da Tabela -->
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Criar Material</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>Nome</label>
+                        <input type="text" class="form-control" name="NOME" id="criar-NOME" placeholder="Insira o Nome">
+                    </div>
+                    <div class="form-group">
+                        <label>Descrição</label>
+                        <input type="text" class="form-control" name="DESCRICAO" id="criar-DESCRICAO"
+                            placeholder="Insira a Descricão">
+                    </div>
+                    <div class="form-group">
+                        <label>Tipo</label>
+                        <select class="form-control" id="criar-TIPO">
+                            <option>EBOOK</option>
+                            <option>FISICO</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Quantidade</label>
+                        <input type="text" class="form-control" name="QUANTIDADE" id="criar-QUANTIDADE"
+                            placeholder="Insira a Quantidade">
+                    </div>
+                    <div class="form-group">
+                        <label>Codigo</label>
+                        <input type="text" class="form-control" name="CODIGO" id="criar-CODIGO"
+                            placeholder="Insira o Codigo">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button class="btn btn-primary" id="criar">Criar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- POPUP para editar dados da Tabela -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Modificar Dados</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>Nome</label>
+                        <input type="text" class="form-control" name="NOME" id="updade-NOME"
+                            placeholder="Insira o Nome">
+                    </div>
+                    <div class="form-group">
+                        <label>Descrição</label>
+                        <input type="text" class="form-control" name="DESCRICAO" id="updade-DESCRICAO"
+                            placeholder="Insira a Descricão">
+                    </div>
+                    <div class="form-group">
+                        <label>Tipo</label>
+                        <input type="text" class="form-control" name="QUANTIDADE" id="updade-TIPO"
+                            placeholder="Insira a Quantidade">
+                    </div>
+                    <div class="form-group">
+                        <label>Quantidade</label>
+                        <input type="text" class="form-control" name="QUANTIDADE" id="updade-QUANTIDADE"
+                            placeholder="Insira a Quantidade">
+                    </div>
+                    <div class="form-group">
+                        <label>Codigo</label>
+                        <input type="text" class="form-control" name="CODIGO" id="updade-CODIGO"
+                            placeholder="Insira o Codigo">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+              <button type="button" class="btn btn-outline-success" id="modificar">Salvar Modificações</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+
+
+    
+      
+
+    <div class="body-all">
+
+        <div id="create"></div>
+
+        <!-- Botões de Navegação -->
+        <nav>
+            <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+                    Criar
+                </button>
+                <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab"
+                    aria-controls="nav-profile" aria-selected="false" onclick="fisico()">Fisico</a>
+                <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab"
+                    aria-controls="nav-profile" aria-selected="false" onclick="ebook()">Ebook</a>
+            </div>
+        </nav>
+
+        <!-- Corpo da Tabela -->
+        <div class="tab-content" id="nav-tabContent">
+            <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                <div class="container">
+                    <table class="table table-stripped">
+                        <div class="loader">
+                            <img src="loading.gif" alt="Loading..." />
+                        </div>
+                        <thead>
+                            <tr>
+                                <th>Codigo</th>
+                                <th>Nome</th>
+                                <th>Tipo</th>
+                                <th>Descrição</th>
+                                <th>Quantidade</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="data"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+<script src="index.js"></script>
+
+</html>
